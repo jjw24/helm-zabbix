@@ -107,6 +107,9 @@ spec:
     - port: {{ .Values.zabbixproxy.service.port }}
       targetPort: 10051
       protocol: TCP
+      {{- if and .Values.zabbixproxy.service.nodePort (eq .Values.zabbixproxy.service.type "NodePort") }}
+      nodePort: {{ .Values.zabbixproxy.service.nodePort }}
+      {{- end }}
       name: zabbix-proxy
   selector:
     app: {{ template "zabbix.fullname" . }}-zabbix-proxy
